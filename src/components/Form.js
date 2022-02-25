@@ -18,7 +18,7 @@ class Form extends React.Component {
       onSaveButtonClick,
     } = this.props;
 
-    console.log(onInputChange);
+    console.log(isSaveButtonDisabled);
     return (
       <form>
         <label htmlFor="name">
@@ -90,7 +90,7 @@ class Form extends React.Component {
           Raridade
           <select
             data-testid="rare-input"
-            name="rare"
+            name="cardRare"
             value={ cardRare }
             onChange={ onInputChange }
           >
