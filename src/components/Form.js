@@ -3,6 +3,13 @@ import React from 'react';
 
 class Form extends React.Component {
   render() {
+    const { props } = this;
+    const {
+      onInputChange,
+      isSaveButtonDisabled,
+      onSaveButtonClick,
+    } = props;
+
     const {
       cardName,
       cardDescription,
@@ -13,12 +20,8 @@ class Form extends React.Component {
       cardRare,
       cardTrunfo,
       // hasTrunfo,
-      onInputChange,
-      isSaveButtonDisabled,
-      onSaveButtonClick,
-    } = this.props;
+    } = props.card;
 
-    console.log(isSaveButtonDisabled);
     return (
       <form>
         <label htmlFor="name">

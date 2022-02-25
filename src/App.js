@@ -3,40 +3,64 @@ import Card from './components/Card';
 import Form from './components/Form';
 
 class App extends React.Component {
+  card = {
+    cardName: '',
+    cardDescription: '',
+    cardAttr1: 0,
+    cardAttr2: 0,
+    cardAttr3: 0,
+    cardImage: '',
+    cardRare: 'normal',
+    cardTrunfo: '',
+    // hasTrunfo,
+  }
+
   constructor(props) {
     super(props);
     this.onInputChange = this.onInputChange.bind(this);
     this.validationField = this.validationField.bind(this);
+    this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
     this.state = this.initialFormState();
   }
 
   onInputChange({ target }) {
     const { name } = target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState({ [name]: value }, () => {
+
+    // setState
+    this.setState((prev) => ({
+      // objeto.card recebe ele mesmo mais outro valor
+      card: { ...prev.card, [name]: value },
+    }), () => {
+      // Callback para resolver o problema async
       this.setState({ isSaveButtonDisabled: this.validationField() });
     });
-    // this.setState({}, callback)
+  }
+
+  onSaveButtonClick(event) {
+    event.preventDefault();
+
+    const { state } = this;
+
+    this.setState((prev) => ({
+      cards: [...prev.cards, state.card],
+    }));
+
+    this.setState({ card: this.card });
   }
 
   initialFormState() {
     return {
-      cardName: '',
-      cardDescription: '',
-      cardAttr1: 0,
-      cardAttr2: 0,
-      cardAttr3: 0,
-      cardImage: '',
-      cardRare: 'normal',
-      cardTrunfo: '',
-      // hasTrunfo,
+      card: this.card,
       isSaveButtonDisabled: true,
       onInputChange: this.onInputChange,
-      // onSaveButtonClick: this.onSaveButtonClick,
+      onSaveButtonClick: this.onSaveButtonClick,
+      cards: [],
     };
   }
 
   validationField() {
+    const { state } = this;
     const {
       cardName,
       cardDescription,
@@ -44,8 +68,7 @@ class App extends React.Component {
       cardRare,
       cardAttr1,
       cardAttr2,
-      cardAttr3 } = this.state;
-
+      cardAttr3 } = state.card;
     const fields = [cardName, cardDescription, cardImage, cardRare];
     const MAX_ATTR_LEN = 90;
     const MAX_ATTR_SUM = 210;
@@ -62,10 +85,12 @@ class App extends React.Component {
   }
 
   render() {
+    const { state } = this;
     return (
       <div>
-        <Form { ...this.state } />
-        <Card { ...this.state } />
+        <Form { ...state } />
+        <Card { ...state.card } />
+        {state.cards.map((item, index) => <Card key={ index } { ...item } />)}
       </div>
     );
   }
