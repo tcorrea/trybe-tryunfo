@@ -2,6 +2,25 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 class Form extends React.Component {
+  showChboxSuperTrunfo(cardTrunfo, onInputChange) {
+    return (
+      <>
+        Super Trunfo
+        <input
+          type="checkbox"
+          name="cardTrunfo"
+          data-testid="trunfo-input"
+          checked={ cardTrunfo }
+          onChange={ onInputChange }
+        />
+      </>
+    );
+  }
+
+  showHasSuperTrunfo() {
+    return <span>Você já tem um Super Trunfo em seu baralho</span>;
+  }
+
   render() {
     const { props } = this;
     const {
@@ -104,18 +123,8 @@ class Form extends React.Component {
         </label>
         <label htmlFor="trunfo">
           {hasTrunfo
-            ? <span>Você já tem um Super Trunfo em seu baralho</span>
-            : <>
-              Super Trunfo
-              <input
-                type="checkbox"
-                name="cardTrunfo"
-                data-testid="trunfo-input"
-                checked={ cardTrunfo }
-                onChange={ onInputChange }
-              />
-
-            </>}
+            ? this.showHasSuperTrunfo()
+            : this.showChboxSuperTrunfo(cardTrunfo, onInputChange)}
         </label>
         <button
           data-testid="save-button"
