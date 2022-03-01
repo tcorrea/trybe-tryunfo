@@ -55,12 +55,12 @@ class App extends React.Component {
 
   initialFormState() {
     return {
-      cards: [],
       card: this.card,
       isSaveButtonDisabled: true,
       hasTrunfo: false,
       onInputChange: this.onInputChange,
       onSaveButtonClick: this.onSaveButtonClick,
+      cards: [],
     };
   }
 

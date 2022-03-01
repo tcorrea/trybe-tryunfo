@@ -39,7 +39,8 @@ class Form extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
-    } = props.card;
+    } = props.card || props;
+    console.log(props.card);
 
     return (
       <form>
@@ -55,7 +56,7 @@ class Form extends React.Component {
         </label>
 
         <label htmlFor="description">
-          Descrção
+          Descrição
           <textarea
             name="cardDescription"
             data-testid="description-input"
