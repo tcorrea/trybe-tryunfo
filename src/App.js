@@ -11,8 +11,7 @@ class App extends React.Component {
     cardAttr3: 0,
     cardImage: '',
     cardRare: 'normal',
-    cardTrunfo: '',
-    // hasTrunfo,
+    cardTrunfo: false,
   }
 
   constructor(props) {
@@ -20,6 +19,7 @@ class App extends React.Component {
     this.onInputChange = this.onInputChange.bind(this);
     this.validationField = this.validationField.bind(this);
     this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
+    this.checkTrunfo = this.checkTrunfo.bind(this);
     this.state = this.initialFormState();
   }
 
@@ -44,19 +44,29 @@ class App extends React.Component {
 
     this.setState((prev) => ({
       cards: [...prev.cards, state.card],
-    }));
+    }), () => {
+      this.setState({
+        hasTrunfo: this.checkTrunfo() });
+    });
 
+    // Limpa os campos
     this.setState({ card: this.card });
   }
 
   initialFormState() {
     return {
+      cards: [],
       card: this.card,
       isSaveButtonDisabled: true,
+      hasTrunfo: false,
       onInputChange: this.onInputChange,
       onSaveButtonClick: this.onSaveButtonClick,
-      cards: [],
     };
+  }
+
+  checkTrunfo() {
+    const { cards } = this.state;
+    return cards.some((item) => item.cardTrunfo === true);
   }
 
   validationField() {
